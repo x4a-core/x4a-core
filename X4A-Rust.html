@@ -99,9 +99,10 @@
             <p>Add the following required dependencies to your project's `Cargo.toml` file to enable HTTP requests and JSON handling:</p>
             <div class="code-block">
 <pre><code><span class="attribute">[dependencies]</span>
-<span class="keyword">ureq</span> = { version = <span class="string">"2.9"</span>, features = [<span class="string">"json"</span>] }
-<span class="keyword">serde</span> = { version = <span class="string">"1.0"</span>, features = [<span class="string">"derive"</span>] }
-<span class="keyword">serde_json</span> = <span class="string">"1.0"</span></code></pre>
+<span class="keyword">ureq</span> = { <span class="keyword">version</span> = <span class="string">"2.9"</span>, <span class="keyword">features</span> = [<span class="string">"json"</span>] }
+<span class="keyword">serde</span> = { <span class="keyword">version</span> = <span class="string">"1.0"</span>, <span class="keyword">features</span> = [<span class="string">"derive"</span>] }
+<span class="keyword">serde_json</span> = <span class="string">"1.0"</span>
+</code></pre>
             </div>
 
             <h3>Client Structure (`src/x4a_client.rs`)</h3>
@@ -115,7 +116,7 @@
             <p>Error handling is built-in: if the proxy returns an HTTP status code of 400 or higher, the function attempts to extract an error message from the JSON response body and returns it as a `Result::Err`. Successful responses are parsed to extract the agent's textual result.</p>
             <div class="code-block">
 <pre><code><span class="comment">/// Sends a query to the X4A agent proxy and parses the resulting data.</span>
-<span class="keyword">pub fn</span> <span class="function">chat</span>(&<span class="keyword">self</span>, params: ChatParams) -> <span class="type">Result</span>&lt;<span class="type">X4AResponse</span>, <span class="type">String</span>&gt; {
+<span class="keyword">pub fn</span> <span class="function">chat</span>(&<span class="keyword">self</span>, params: <span class="type">ChatParams</span>) -> <span class="type">Result</span>&lt;<span class="type">X4AResponse</span>, <span class="type">String</span>&gt; {
     <span class="comment">// Construct the full URL: e.g., http://localhost:3000/api/grok</span>
     <span class="keyword">let</span> url = <span class="function">format!</span>(<span class="string">"{}/api/grok"</span>, <span class="keyword">self</span>.base_url.<span class="function">trim_end_matches</span>(<span class="string">'/'</span>));
     
@@ -127,7 +128,7 @@
     }
 
     <span class="comment">// Send the payload</span>
-    <span class="keyword">let</span> resp = req.<span class="function">send_json</span>(<span class="function">json!</span>({<span class="string">"id"</span>: params.id, <span class="string">"type"</span>: params.r#type, <span class="string">"query"</span>: params.query}))
+    <span class="keyword">let</span> resp = req.<span class="function">send_json</span>(<span class="function">json!</span>({<span class="string">"id"</span>: params.<span class="type">id</span>, <span class="string">"type"</span>: params.r#type, <span class="string">"query"</span>: params.<span class="type">query</span>}))
         .<span class="function">map_err</span>(|e| e.<span class="function">to_string</span>())?;
     
     <span class="keyword">let</span> status = resp.<span class="function">status</span>();

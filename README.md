@@ -1,4 +1,4 @@
-cat > README.md <<'EOF'
+
 <p align="center">
   <img src="BANNER.png" alt="X4A Protocol Banner" width="100%" />
 </p>

@@ -1,7 +1,7 @@
 ````bash
 cat > README.md <<'EOF'
 <p align="center">
-  <img src="./BANNER.png" alt="X4A Protocol Banner" width="100%" />
+  <img src="BANNER.png" alt="X4A Protocol Banner" width="100%" />
 </p>
 
 <h1 align="center">⚙️ X4A Protocol: Autonomous Agents Market 🚀</h1>

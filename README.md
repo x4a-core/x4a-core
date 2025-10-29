@@ -1,13 +1,19 @@
+Perfect — since you’ve got both your **GitHub repo (`x4a-core`)** and **website (`x4agent.io`)**, here’s a clean, **ready-to-paste command** that will create a fully working `README.md` **with your live banner and logo images hosted on your website**, so they’ll always render everywhere (GitHub, npm, mirrors, etc.).
+
+---
+
+### ✅ Copy–Paste This in Your Terminal
+
 ````bash
 cat > README.md <<'EOF'
 <p align="center">
-  <img src="BANNER.png" alt="X4A Protocol Banner" width="100%" />
+  <img src="https://x4agent.io/BANNER.png" alt="X4A Protocol Banner" width="100%" />
 </p>
 
 <h1 align="center">⚙️ X4A Protocol: Autonomous Agents Market 🚀</h1>
 
 <p align="center">
-  <img src="./X4A.png" alt="X4A Logo" width="120" />
+  <img src="https://x4agent.io/X4A.png" alt="X4A Logo" width="120" />
 </p>
 
 <p align="center">
@@ -71,14 +77,12 @@ The X4A SDK provides everything you need to deploy your own autonomous agent ont
 pip install x4a-sdk
 
 # For Rust core development
-cargo add x4a-core --git https://github.com/x4a-protocol/core
+cargo add x4a-core --git https://github.com/x4a-core/x4a-core
 ````
 
 ---
 
 ### Step 1: Initialize PDA Escrow
-
-A one-time transaction grants your agent **irrevocable authority** over its PDA escrow.
 
 ```python
 from x4a import Agent, PDAEscrow
@@ -148,10 +152,6 @@ server.js
 
 `POST /api/grok`
 
-### Headers
-
-`Authorization: Bearer <XAI_API_KEY>`
-
 ### Example Request
 
 ```json
@@ -167,22 +167,9 @@ server.js
 ```json
 {
   "result": "X4A ARBITRAGE Response: TX hash GmH3...52L executed. Latency 27ms. ROI +1.2%.",
-  "choices": [ ... ],
   "model": "grok-3-mini"
 }
 ```
-
----
-
-### Common Agent Queries
-
-| Agent ID | Query Example                                   |
-| :------- | :---------------------------------------------- |
-| `RL1`    | Request optimal Q-value for spread adjustment.  |
-| `ARB3`   | Submit transaction with optimal MEV path.       |
-| `POC`    | Query current consensus price.                  |
-| `SLA2`   | Request proof of sub-200ms transaction latency. |
-| `LP2`    | Query liquidity pool spread delta.              |
 
 ---
 
@@ -199,32 +186,22 @@ server.js
 
 ## ⏳ Deferred Chat Completions (Optional)
 
-X4A supports **deferred xAI completions** for long-running simulations:
+Supports **deferred xAI completions** for long-running simulations:
 
 1. Initial call returns a `request_id`
-2. Poll `/api/grok/defer/{request_id}` every few seconds
-3. Retrieve the response once ready (200 OK)
-4. Each deferred result expires after 24 hours
+2. Poll `/api/grok/defer/{request_id}` until ready (200 OK)
+3. Each deferred result expires after 24 hours
 
-The `reasoning_content` field can expose raw agent thought traces (except for `grok-4`).
+`reasoning_content` exposes raw agent thought traces (except in `grok-4`).
 
 ---
 
 ## 🔐 Security Notes
 
-* Store **`XAI_API_KEY`** only in server-side `.env`
-* Add **rate limiting** and **fetch timeouts** to prevent abuse
-* Do **not** log full prompt data in production
-* Ensure **PDA authority transfer** is executed once and verified on-chain
-
----
-
-## 🧭 Developer Tips
-
-* Customize Mermaid node mappings for live swarm events
-* Use `data.result` as the default parser in the UI
-* Set your model dynamically with `XAI_MODEL=grok-3` or `grok-4-0709`
-* Integrate analytics with `/health` or `/metrics` endpoints
+* Store `XAI_API_KEY` only in server-side `.env`
+* Add rate limiting and fetch timeouts
+* Never log full prompts in production
+* Verify PDA authority transfers on-chain
 
 ---
 
@@ -244,8 +221,24 @@ Released under the **MIT License** — see [`LICENSE`](./LICENSE).
 
 <p align="center">
   <b>Build your agent. Join the swarm. Dominate the market.</b><br/>
-  🧠 <a href="[https://x4agent.io](https://x4agent.io/)">x4agent.io</a>
+  🧠 <a href="https://x4agent.io">x4agent.io</a> | <a href="https://github.com/x4a-core/x4a-core">GitHub Repo</a>
 </p>
 EOF
 ```
-::contentReference[oaicite:0]{index=0}
+
+---
+
+### ✅ After running:
+
+1. The file `README.md` will be created.
+2. Commit and push:
+
+   ```bash
+   git add README.md
+   git commit -m "Add bannered README with website assets"
+   git push
+   ```
+3. Open:
+   🔗 [https://github.com/x4a-core/x4a-core](https://github.com/x4a-core/x4a-core)
+
+Your banner (`BANNER.png`) and logo (`X4A.png`) will now render from **[https://x4agent.io/](https://x4agent.io/)** instantly on GitHub and any other Markdown viewer.

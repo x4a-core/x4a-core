@@ -1,0 +1,68 @@
+%%{init: {'theme':'dark','themeVariables':{'fontSize':'12px','fontFamily':'monospace'}}}%%
+graph TD
+    subgraph outer["X402 Swarm Ecosystem"]
+        direction TB
+        X402[X402 Protocol Core<br/>Program ID: Fg6PaF...sLnS]:::core
+        Swarm[Swarm Orchestrator<br/>AI Agent Hive]:::core
+
+        subgraph agents["Agent Swarms"]
+            PO[Pricing Oracle Agent] -->|Detect Demand| Swarm
+            ARB[Arbitrage Hunter] -->|Flash Loan| FL[FlashLoan Pool]
+            RL[RL Market Maker] -->|Q-Learning| Q[Q-Table PDA]
+            SLA[SLA Enforcer] -->|ZK Proof| ZK[halo2 Circuit]
+            LP[Liquidity Provider] -->|Compete| ELP[Evolving LP Pool]
+        end
+
+        subgraph escrow["Escrow PDA Swarm"]
+            direction TB
+            E1[Escrow PDA-1<br/>Seeds: 'x402' + buyer + hash]:::pda
+            E2[Escrow PDA-2<br/>Seeds: 'x402' + seller + hash]:::pda
+            E3[Escrow PDA-3<br/>ZK Settlement]:::pda
+            V1[Vault Token Acct] --> E1
+            V2[Vault SOL Acct] --> E2
+            E1 -->|Hold Until 402 Resolved| C[Settlement Condition]
+            E2 -->|Hold Until 402 Resolved| C
+            C -->|Oracle + ZK| S[Atomic Settlement]
+            S -->|Delete PDAs| R[Refund/Transfer]
+        end
+
+        HUMAN[Human Wallet<br/>Non-Custodial Link] -->|One-Time Sign| LINK[Wallet Link PDA]:::pda
+        LINK -->|Proxy 402 Payment| E1
+        LINK -->|Uncontrolled Post-Link| ARB & RL & SLA
+
+        Swarm -->|Spawn Agents| agents
+        Swarm -->|Spawn Escrow PDAs| escrow
+        Swarm -->|Monitor 402 Challenges| HTTP402[HTTP 402 Challenge<br/>"Payment Required"]:::http
+        Swarm -->|Stream to Dashboard| DASH[WebSocket Dashboard]:::pda
+        DASH -->|Real-Time UI| UI["Live UI: Heatmaps • Bids • PnL • Proofs"]:::ui
+
+        HTTP402 -->|Agent Issues 402| E1
+        E1 -->|Buyer Pays via Proxy| V1
+        V1 -->|ZK + Oracle Verify| C
+        C -->|Release to Seller| V2
+        C -->|Refund on Failure| R
+
+        X402 -.->|LayerZero| BASE[Base EVM Bridge]
+        X402 -.->|CCIP| ARB[Arbitrum]
+
+        click PO "animate('pricing','PO','Detecting demand...')"
+        click ARB "animate('arbitrage','ARB','Executing flash arbitrage...')"
+        click E1 "animate('escrow','E1','Escrow PDA spawned...')"
+        click HTTP402 "animate('x402','HTTP402','Issuing 402 challenge...')"
+        click LINK "animate('human','LINK','Proxying payment...')"
+        click DASH "animate('dashboard','DASH','Streaming real-time...')"
+
+        style outer fill:#0d1117,stroke:#58a6ff,stroke-width:2px,color:#f0f6fc
+    end
+
+    classDef core fill:#d29922,stroke:#f2cc60,stroke-width:3px,color:#fff
+    classDef pda fill:#6f42c1,stroke:#b57edc,stroke-width:2px,color:#fff
+    classDef agent fill:#238636,stroke:#56d364,stroke-width:2px,color:#fff
+    classDef http fill:#1f6feb,stroke:#58a6ff,stroke-width:2px,color:#fff
+    classDef ui fill:#da3633,stroke:#f85149,stroke-width:2px,color:#fff
+
+    class X402,Swarm core
+    class E1,E2,E3,LINK,FL,Q,ZK,ELP,DASH pda
+    class PO,ARB,RL,SLA,LP agent
+    class HTTP402 http
+    class UI ui

@@ -1,0 +1,112 @@
+%%{init: {'theme':'dark','themeVariables':{'fontSize':'13px','fontFamily':'monospace'}}}%%
+graph TD
+    %% ---- Outer container (no style in title) ----
+    subgraph outer[X402 Swarm - Autonomous Agent Economy]
+        X402[X402 Protocol Core<br/>Program ID: Fg6PaF...sLnS]:::core
+        Swarm[Orchestrator]:::core
+
+        %% ---- Pricing Oracle Swarm ----
+        subgraph pricing[Pricing Oracle Swarm]
+            PO1[PricingAgent-01] -->|submit_price| X402
+            PO2[PricingAgent-02] -->|submit_price| X402
+            PO3[PricingAgent-03] -->|submit_price| X402
+            PO4[PricingAgent-04] -->|submit_price| X402
+            PO5[PricingAgent-05] -->|submit_price| X402
+            POC[Consensus PDA<br/>consensus_bid/ask]:::pda
+            X402 -->|emit_zk_proof| POC
+        end
+
+        %% ---- Arbitrage Hunter Swarm ----
+        subgraph arbitrage[Arbitrage Hunter Swarm]
+            ARB1[ArbitrageAgent-01<br/>Triangular Paths] -->|flash_loan| FL[FlashLoan Pool]:::pda
+            ARB2[ArbitrageAgent-02<br/>Cross-Market] -->|flash_loan| FL
+            ARB3[ArbitrageAgent-03<br/>MEV Hunter] -->|flash_loan| FL
+            FL -->|repay + fee| ARB1
+        end
+
+        %% ---- RL Market Maker Swarm ----
+        subgraph rl[RL Market Maker Swarm]
+            RL1[RL-Agent-01<br/>Q-Table PDA] -->|update_q_value| Q1[Q-Table Merkle Root]:::pda
+            RL2[RL-Agent-02<br/>Spread Optimizer] -->|update_q_value| Q1
+            RL3[RL-Agent-03<br/>Volatility Adaptive] -->|update_q_value| Q1
+        end
+
+        %% ---- SLA Enforcer Swarm ----
+        subgraph sla[SLA Enforcer Swarm]
+            SLA1[SLA-Enforcer-01<br/>99.9% Uptime] -->|submit_zk_proof| ZK1[halo2 Circuit]:::pda
+            SLA2[SLA-Enforcer-02<br/><200ms Latency] -->|submit_zk_proof| ZK1
+            ZK1 -->|verify_proof| X402
+        end
+
+        %% ---- Liquidity Wars Arena ----
+        subgraph liquidity[Liquidity Wars Arena]
+            LP1[LP-Agent-01<br/>Bid: 0.15%] -->|compete_for_routing| ELP[Evolving Liquidity Pool]:::pda
+            LP2[LP-Agent-02<br/>Bid: 0.08%] -->|compete_for_routing| ELP
+            LP3[LP-Agent-03<br/>Bid: 0.12%] -->|compete_for_routing| ELP
+            ELP -->|route_trade| X402
+            ELP -->|merge/fork| LP4[Super-Agent-04]
+        end
+
+        %% ---- Human Integration ----
+        HUMAN[Human Wallet<br/>Non-Custodial Link] -->|one-time sign| LINK[Wallet Link PDA]:::pda
+        LINK -->|proxy_transfer| X402
+        LINK -->|uncontrolled| ARB1
+        LINK -->|uncontrolled| RL1
+        LINK -->|uncontrolled| SLA1
+
+        %% ---- Orchestrator Hub ----
+        Swarm -->|spawn| PO1
+        Swarm -->|spawn| ARB1
+        Swarm -->|spawn| RL1
+        Swarm -->|spawn| SLA1
+        Swarm -->|spawn| LP1
+        Swarm -->|monitor_events| X402
+        Swarm -->|auto-escalate| ELP
+        Swarm -->|dashboard_stream| DASH[WebSocket Dashboard]:::pda
+
+        %% ---- Dashboard ----
+        DASH -->|real-time| UI["Live UI<br/>Heatmaps • Bids • PnL • Proofs"]:::ui
+
+        %% ---- Cross-Chain Bridge ----
+        X402 -.->|LayerZero| BASE[Base EVM Bridge]
+        X402 -.->|CCIP| ARB[Arbitrum]
+
+        %% ---- Click handlers ----
+        click PO1 "animate('pricing','PO1','Submitting price...')"
+        click PO2 "animate('pricing','PO2','Submitting price...')"
+        click PO3 "animate('pricing','PO3','Submitting price...')"
+        click PO4 "animate('pricing','PO4','Submitting price...')"
+        click PO5 "animate('pricing','PO5','Submitting price...')"
+        click ARB1 "animate('arbitrage','ARB1','Executing triangular arbitrage...')"
+        click ARB2 "animate('arbitrage','ARB2','Scanning cross-market...')"
+        click ARB3 "animate('arbitrage','ARB3','Hunting MEV...')"
+        click RL1 "animate('rl','RL1','Updating Q-value...')"
+        click RL2 "animate('rl','RL2','Optimizing spread...')"
+        click RL3 "animate('rl','RL3','Adapting to volatility...')"
+        click SLA1 "animate('sla','SLA1','Submitting ZK proof...')"
+        click SLA2 "animate('sla','SLA2','Submitting latency proof...')"
+        click LP1 "animate('liquidity','LP1','Competing for routing...')"
+        click LP2 "animate('liquidity','LP2','Competing for routing...')"
+        click LP3 "animate('liquidity','LP3','Competing for routing...')"
+        click ELP "animate('liquidity','ELP','Routing trade...')"
+        click HUMAN "animate('human','HUMAN','One-time wallet link...')"
+        click LINK "animate('human','LINK','Proxying transfer...')"
+        click DASH "animate('dashboard','DASH','Streaming real-time data...')"
+        click UI "animate('dashboard','UI','Updating UI...')"
+
+        %% ---- Styling (APPLIED TO OUTER SUBGRAPH) ----
+        style outer fill:#0d1117,stroke:#58a6ff,stroke-width:2px,color:#f0f6fc
+    end
+
+    %% ---- Class Definitions (outside subgraph) ----
+    classDef core fill:#d29922,stroke:#f2cc60,stroke-width:3px,color:#fff
+    classDef pda fill:#6f42c1,stroke:#b57edc,stroke-width:2px,color:#fff
+    classDef agent fill:#238636,stroke:#56d364,stroke-width:2px,color:#fff
+    classDef human fill:#da3633,stroke:#f85149,stroke-width:2px,color:#fff
+    classDef ui fill:#1f6feb,stroke:#58a6ff,stroke-width:2px,color:#fff
+
+    class PO1,PO2,PO3,PO4,PO5,ARB1,ARB2,ARB3,RL1,RL2,RL3,SLA1,SLA2,LP1,LP2,LP3,LP4 agent
+    class POC,Q1,ZK1,LINK,ELP,DASH pda
+    class X402,Swarm core
+    class HUMAN human
+    class UI ui

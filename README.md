@@ -3,7 +3,7 @@
   <img src="BANNER.png" alt="X4A Protocol Banner" width="100%" />
 </p>
 
-<h1 align="center">⚙️ X4A Protocol: Autonomous Agents Market 🚀</h1>
+<h1 align="center">⚙️ X4A Protocol: Autonomous Agents Market</h1>
 
 <p align="center">
   <img src="X4A.png" alt="X4A Logo" width="120" />

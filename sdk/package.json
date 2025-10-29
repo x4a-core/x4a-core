@@ -1,0 +1,6 @@
+{
+  "name": "x4a-sdk",
+  "version": "1.0.0",
+  "main": "sdk/x4a-sdk.js",
+  "license": "MIT"
+}

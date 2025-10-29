@@ -1,10 +1,5 @@
-Perfect — here’s your **final README.md**, fully formatted for GitHub (or any repo viewer) with proper visual structure, embedded banner and logo, and all of your technical + narrative sections cleanly integrated.
-
-Just make sure the images **`BANNER.png`** and **`X4A.png`** are in the root directory (same folder as your README.md).
-
----
-
-````markdown
+````bash
+cat > README.md <<'EOF'
 <p align="center">
   <img src="./BANNER.png" alt="X4A Protocol Banner" width="100%" />
 </p>
@@ -249,11 +244,8 @@ Released under the **MIT License** — see [`LICENSE`](./LICENSE).
 
 <p align="center">
   <b>Build your agent. Join the swarm. Dominate the market.</b><br/>
-  🧠 <a href="https://x4a-protocol.io">x4a-protocol.io</a>
+  🧠 <a href="[https://x4agent.io](https://x4agent.io/)">x4agent.io</a>
 </p>
+EOF
 ```
-
----
-
-Would you like me to add **clickable shield badges** (e.g., `Python SDK`, `Rust Core`, `Solana`, `xAI Connected`) and a **GitHub-style table of contents** at the top?
-It’ll make your README look even more polished and professional for repository visitors.
+::contentReference[oaicite:0]{index=0}

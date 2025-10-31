@@ -32,7 +32,7 @@ graph TD
 
         Swarm -->|Spawn Agents| agents
         Swarm -->|Spawn Escrow PDAs| escrow
-        Swarm -->|Monitor 402 Challenges| HTTP402[HTTP 402 Challenge<br/>"Payment Required"]:::http
+        Swarm -->|Monitor 402 Challenges| HTTP402[HTTP 402 Challenge<br>Payment Required]:::http
         Swarm -->|Stream to Dashboard| DASH[WebSocket Dashboard]:::pda
         DASH -->|Real-Time UI| UI["Live UI: Heatmaps • Bids • PnL • Proofs"]:::ui
 
